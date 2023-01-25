@@ -26,6 +26,17 @@ npm install
 // with git bash/linux/macOs
 cp .env.example .env
 ```
+#### Create Database and migrate Table using sequelize cli
+
+Create Database
+```
+npx sequelize db:create
+```
+Migrate table
+
+```
+npx sequelize db:migrate
+```
 
 #### Start the server
 
