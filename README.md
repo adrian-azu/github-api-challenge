@@ -94,7 +94,7 @@ Try requesting with postman http://locahost:3000/test to see the response
 #### Bonus Challenge: Hamming Distance
 
 ```http
-  POST /challenge/usernames
+  POST /challenge/distance
 ```
 
 | HEADERS         | Type     | Description                            |
