@@ -26,6 +26,11 @@ npm install
 // with git bash/linux/macOs
 cp .env.example .env
 ```
+
+To generate a github token you can follow the link below and select **user** for the scope:
+
+https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
+
 #### Create Database and migrate Table using sequelize cli
 
 Create Database
