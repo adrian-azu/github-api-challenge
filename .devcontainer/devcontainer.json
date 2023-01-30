@@ -1,6 +1,6 @@
 {
   "name": "github-api-challenge",
-  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+  "image": "mcr.microsoft.com/devcontainers/universal:2",
   "features": {
     "ghcr.io/devcontainers/features/node:1": {
       "version":"lts"
