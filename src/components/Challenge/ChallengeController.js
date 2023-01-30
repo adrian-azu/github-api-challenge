@@ -1,8 +1,9 @@
 const { request, response } = require("express");
-const { fetchUsername } = require("../utils/axiosService");
-const RedisClient = require("../utils/redisClient");
+const { fetchUsername } = require("../../utils/axiosService");
+const RedisClient = require("../../utils/redisClient");
+
 class GithubController {
-  static async listUsernames(req = request, res = response, next) {
+  static async listUsernames(req = request, res = response) {
     let { usernames } = req.body;
     usernames = [...new Set(usernames)];
     const cachedData = (
@@ -13,7 +14,7 @@ class GithubController {
             return JSON.parse(exists);
           }
           const result = await fetchUsername(value);
-          if (result.message == undefined) {
+          if (!result.message) {
             const githubData = {
               name: result.name,
               login: result.login,
@@ -26,12 +27,11 @@ class GithubController {
             await RedisClient.setExp(result.login, JSON.stringify(githubData), 120);
             return githubData;
           }
+          return null;
         })
       )
     )
-      .filter((data) => {
-        return !!data;
-      })
+      .filter((data) => !!data)
       .sort((a, b) => {
         if (a?.name < b?.name) {
           return -1;
@@ -42,7 +42,7 @@ class GithubController {
         return 0;
       });
 
-    if (cachedData.length == 0) {
+    if (cachedData.length === 0) {
       return res.status(404).json({ message: "No usernames found" });
     }
     return res.status(200).json({ data: cachedData });
@@ -59,7 +59,7 @@ class GithubController {
     let distance = 0;
     // convert x into array and check bits per bits to y
     binary.split("").forEach((value, index) => {
-      if (binary2[index] !== value) distance++;
+      if (binary2[index] !== value) distance += 1;
     });
 
     return res.status(200).json({

@@ -1,7 +1,8 @@
 const { Router } = require("express");
-const controller = require("../controllers/AuthController");
-const { remover } = require("../middlewares/ErrorHandler");
-const validate = require("../validations/AuthValidation");
+const controller = require("./AuthController");
+const { remover } = require("../../middlewares/ErrorHandler");
+const validate = require("./AuthValidation");
+
 const router = Router();
 
 router.post("/register", validate.register(), remover(controller.register));

@@ -1,29 +1,31 @@
-"use strict";
+const User = require("./User");
 
-const User = require("../models/User");
 class UserService {
-  async getUserEmail(email = "") {
+  static async getUserEmail(email = "") {
     try {
       return await User.findOne({ where: { email } });
     } catch (error) {
       throw new Error(error);
     }
   }
-  async createUser(user = {}) {
+
+  static async createUser(user = {}) {
     try {
       return await User.create(user);
     } catch (error) {
       throw new Error(error);
     }
   }
-  async checkIfSaltUsed(salt = "") {
+
+  static async checkIfSaltUsed(salt = "") {
     try {
       return await User.findOne({ where: { salt } });
     } catch (error) {
       throw new Error(error);
     }
   }
-  async getUserById(id) {
+
+  static async getUserById(id) {
     try {
       return await User.findByPk(id);
     } catch (error) {
@@ -31,4 +33,4 @@ class UserService {
     }
   }
 }
-module.exports = new UserService();
+module.exports = UserService;
