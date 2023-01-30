@@ -1,9 +1,12 @@
 {
-  "name": "Node.js",
-  "image": "mcr.microsoft.com/devcontainers/javascript-node:0-18-bullseye",
+  "name": "github-api-challenge",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
   "features": {
-    "ghcr.io/devcontainers-contrib/features/mysql-homebrew:1": {},
-    "ghcr.io/devcontainers-contrib/features/redis-homebrew:1": {},
-    "ghcr.io/devcontainers/features/github-cli:1": {}
+    "ghcr.io/devcontainers-contrib/features/mysql-homebrew:1": {
+      "version":"latest"
+    },
+    "ghcr.io/devcontainers-contrib/features/redis-homebrew:1": {
+      "version":"latest"
+    }
   }
 }
