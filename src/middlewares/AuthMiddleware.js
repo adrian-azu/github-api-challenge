@@ -1,13 +1,15 @@
+/* eslint-disable default-param-last */
 const { request, response } = require("express");
 const jwt = require("jsonwebtoken");
-const UserService = require("../services/UserService");
+const UserService = require("../components/User/UserService");
 const RedisClient = require("../utils/redisClient");
+
 const authenticateToken = async (req = request, res = response, next) => {
-  const hasValidToken = req.headers["authorization"] && req.headers["authorization"].split(" ")[1];
+  const hasValidToken = req.headers.authorization && req.headers.authorization.split(" ")[1];
   if (!hasValidToken) {
     return res.status(401).json({ message: "No token provided" });
   }
-  const token = req.headers["authorization"].split(" ")[1];
+  const token = req.headers.authorization.split(" ")[1];
   // continue
   try {
     const userToken = await RedisClient.get(token);
@@ -20,11 +22,11 @@ const authenticateToken = async (req = request, res = response, next) => {
     if (!decoded) {
       return res.status(401).json({ message: "Invalid token" });
     }
-    const user = await UserService.getUserById(decoded["id"]);
+    const user = await UserService.getUserById(decoded.id);
     if (!user) {
       return res.status(401).json({ message: "User data does not exists!" });
     }
-    //DRY !!
+    // DRY !!
     await RedisClient.setToken(token, user);
     req.user = user;
     return next();
@@ -32,9 +34,8 @@ const authenticateToken = async (req = request, res = response, next) => {
     if (error instanceof jwt.TokenExpiredError) {
       await RedisClient.deleteToken(token);
       return res.status(401).json({ message: "Token expired" });
-    } else {
-      return res.status(401).json({ message: "Invalid token" });
     }
+    return res.status(401).json({ message: "Invalid token" });
   }
 };
 module.exports = authenticateToken;

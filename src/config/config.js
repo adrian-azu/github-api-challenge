@@ -1,5 +1,4 @@
-require('dotenv').config()
-const fs = require("fs");
+require("dotenv").config();
 
 module.exports = {
   development: {
@@ -12,6 +11,7 @@ module.exports = {
     dialectOptions: {
       bigNumberStrings: true,
     },
+    logging: false,
   },
   test: {
     username: process.env.CI_DB_USERNAME,
@@ -19,10 +19,9 @@ module.exports = {
     database: process.env.CI_DB_NAME,
     host: "127.0.0.1",
     port: 3306,
-    dialect: "mysql",
-    dialectOptions: {
-      bigNumberStrings: true,
-    },
+    dialect: "sqlite",
+    storage: ":memory:",
+    logging: false,
   },
   production: {
     username: process.env.PROD_DB_USERNAME,
@@ -30,6 +29,6 @@ module.exports = {
     database: process.env.PROD_DB_NAME,
     host: process.env.PROD_DB_HOSTNAME,
     port: process.env.PROD_DB_PORT,
-    dialect: "mysql"
+    dialect: "mysql",
   },
 };

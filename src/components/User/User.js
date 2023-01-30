@@ -1,7 +1,8 @@
-"use strict";
+
 const { Model, DataTypes } = require("sequelize");
-const sequelize = require("../db/mysql");
-const { hashPassword } = require("../utils/hashPassword");
+const sequelize = require("../../db/mysql");
+const { hashPassword } = require("../../utils/hashPassword");
+
 class User extends Model {
   /**
    * Helper method for defining associations.
@@ -13,8 +14,9 @@ class User extends Model {
   }
 
   verifyPassword(value) {
-    return hashPassword(value, this.dataValues.salt) == this.dataValues.password;
+    return hashPassword(value, this.dataValues.salt) === this.dataValues.password;
   }
+
   toJSON() {
     return { ...this.get(), id: undefined };
   }
@@ -46,7 +48,6 @@ User.init(
       type: DataTypes.STRING,
       allowNull: false,
       set(value) {
-        console.log("NEW SALT", value);
         this.setDataValue("password", hashPassword(this.password, value));
         this.setDataValue("salt", value);
       },

@@ -8,6 +8,8 @@ const compression = require("compression");
 const redis = require("./src/db/redis");
 const { errorHandler } = require("./src/middlewares/ErrorHandler");
 const routes = require("./src/routes");
+const logger = require("./src/utils/logger");
+
 const app = express();
 
 app.use(cors());
@@ -21,13 +23,13 @@ app.use(bodyParser.json());
 
 app.use(routes);
 
-app.use(function (req, res, next) {
-  res.on("finish", function () {
+app.use((req, res, next) => {
+  res.on("finish", () => {
     redis.disconnect();
   });
   next();
 });
 app.use(errorHandler);
 app.listen(process.env.PORT || 3000, () => {
-  console.log("Server started on port 3000");
+  logger.info("Server started on port 3000");
 });

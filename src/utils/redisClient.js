@@ -1,5 +1,6 @@
 const client = require("../db/redis");
 const logger = require("./logger");
+
 module.exports = {
   setToken: async (token, data) => {
     try {
@@ -15,6 +16,7 @@ module.exports = {
       logger.error(error);
     }
   },
+  // eslint-disable-next-line consistent-return
   get: async (key = "") => {
     try {
       return await client.get(key);
@@ -22,7 +24,7 @@ module.exports = {
       logger.error(error);
     }
   },
-  setExp: async (token = "", data, expiration = 10) => {
+  setExp: async (token = "", data = "", expiration = 10) => {
     try {
       await client.set(token, data, "EX", expiration);
     } catch (error) {
