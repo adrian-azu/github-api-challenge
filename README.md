@@ -1,4 +1,4 @@
-## Github API - Joyride Backend Engineer Technical Exam
+## Github API 
 
 ## Prerequisites
 
